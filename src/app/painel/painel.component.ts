@@ -39,7 +39,8 @@ export class PainelComponent implements OnInit {
       this.rodada++
 
       //progresso
-      this.progresso = this.progresso + 25
+      this.progresso = this.progresso + (100 / this.frases.length)
+      console.log(this.progresso)
 
 
       this.rodadaFrase = this.frases[this.rodada]
