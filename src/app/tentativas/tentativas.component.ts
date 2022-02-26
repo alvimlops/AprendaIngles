@@ -33,7 +33,6 @@ export class TentativasComponent implements OnInit, OnChanges {
    }
 
   ngOnInit(): void {
-    console.log('hello')
   }
 
 }

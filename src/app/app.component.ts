@@ -13,5 +13,9 @@ import { Component } from '@angular/core';
 //O objetivo de uma classe e gerenciar o template
 //controlar toda a logica
 export class AppComponent {
-  title = 'app1';
+
+  public encerrarJogo (tipo: string) : void {
+    console.log(tipo);
+  }
+
 }
