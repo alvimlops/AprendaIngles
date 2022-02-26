@@ -1,79 +1,70 @@
-import { Frase } from './../shared/frase.model';
-import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, OnDestroy } from '@angular/core';
+import { Frase } from '../shared/frase.model';
 import { FRASES } from './frase-mock';
-
 
 @Component({
   selector: 'app-painel',
   templateUrl: './painel.component.html',
   styleUrls: ['./painel.component.css']
 })
-export class PainelComponent implements OnInit {
+export class PainelComponent implements OnInit, OnDestroy {
 
   public frases: Frase[] = FRASES
   public instrucao: string = 'Traduza a frase'
   public resposta: string = ''
-
   public rodada: number = 0
-  public rodadaFraseEng!: Frase;
+  public rodadaFrase!: Frase;
 
-  public progresso:number = 0
-
+  public progresso: number = 0
   public tentativas: number = 3
-  rodadaFrase: any;
 
-  @Output() public encerrarJogo: EventEmitter<string> = new EventEmitter()
-
-
+  @Output() public encerrarJogo:EventEmitter<string> = new EventEmitter()
   constructor() {
     this.atualizaRodada()
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
+  }
+  ngOnDestroy(){
+    // console.log('Foi destruido')
   }
 
-  ngOnDestroy() {
-    console.log('componente painel foi destruido')
+  public atualizaResposta(resposta: Event): void {
+    this.resposta = (<HTMLInputElement>resposta.target).value
+    // console.log(this.resposta)
   }
 
-  public atualizaResposta(resposta: Event): void{
-  this.resposta = ((<HTMLInputElement>resposta.target).value)
-  //console.log(this.resposta)
-  }
+  public verificarResposta(): void {
+    // console.log(this.tentativas)
+    // console.log('Verificar resposta: ', this.resposta)
+    if (this.rodadaFrase.frasePtBr == this.resposta) {
 
-  public VerificarResposta(): void {
-    if(this.rodadaFrase.frasePtBr == this.resposta){
-
-      //trocar pergunta da rodada
       this.rodada++
+
+      if(this.rodada === 4) {
+        this.encerrarJogo.emit('vitoria')
+      }
+      //atualiza o objeto rodadaFrase
+      this.atualizaRodada()
 
       //progresso
       this.progresso = this.progresso + (100 / this.frases.length)
 
 
-      //
-      if(this.rodada === 4){
-        this.encerrarJogo.emit('Vitoria')
-      }
-
-      //atualizar o objeto rodadaFrase
-      this.atualizaRodada()
-
-
-    }else{
+    } else {
       this.tentativas--
 
-      if(this.tentativas === -1){
-        this.encerrarJogo.emit('Derrota')
+      if(this.tentativas === -1) {
+       this.encerrarJogo.emit('derrota')
       }
+      // console.log(this.tentativas)
     }
-
   }
+
   public atualizaRodada(): void{
     //define a frase da rodada com base em alguma lógica
     this.rodadaFrase = this.frases[this.rodada]
     //limpar a resposta
     this.resposta = ''
   }
-
 }
