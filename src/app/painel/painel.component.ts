@@ -13,12 +13,15 @@ export class PainelComponent implements OnInit {
   public frases: Frase[] = FRASES
   public instrucao: string = 'Traduza a frase'
   public resposta: string = ''
+
   public rodada: number = 0
+  public rodadaFraseEng!: Frase;
 
+  public progresso:number = 0
 
-  public progresso: number = 0
   public tentativas: number = 3
   rodadaFrase: any;
+
 
   constructor() {
     this.atualizaRodada()
@@ -49,7 +52,11 @@ export class PainelComponent implements OnInit {
 
 
     }else{
-      alert('a tradução esta errada')
+      this.tentativas--
+
+      if(this.tentativas === -1){
+        alert('voce perdeu todas as tentativas')
+      }
     }
 
   }
