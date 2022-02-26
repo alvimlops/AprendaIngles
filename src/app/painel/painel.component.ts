@@ -36,7 +36,6 @@ export class PainelComponent implements OnInit {
   }
 
   public VerificarResposta(): void {
-
     if(this.rodadaFrase.frasePtBr == this.resposta){
       alert('A tradução esta correta')
 
