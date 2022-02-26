@@ -1,5 +1,5 @@
 import { Frase } from './../shared/frase.model';
-import { Component, OnInit, Output, EventEmitter  } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { FRASES } from './frase-mock';
 
 
@@ -30,6 +30,10 @@ export class PainelComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  }
+
+  ngOnDestroy() {
+    console.log('componente painel foi destruido')
   }
 
   public atualizaResposta(resposta: Event): void{

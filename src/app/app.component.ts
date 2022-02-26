@@ -14,8 +14,10 @@ import { Component } from '@angular/core';
 //controlar toda a logica
 export class AppComponent {
 
+  public jogoEmAndamento: boolean = true
+
   public encerrarJogo (tipo: string) : void {
     console.log(tipo);
+    this.jogoEmAndamento = false
   }
-
 }
